@@ -2,24 +2,21 @@ import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
-import { DARK_PARTICLE } from "../constants";
+import { DARK_PARTICLE, LIGHT_PARTICLE } from "../constants";
 
-const App = () => {
+interface Props {
+  theme: "dark" | "light";
+}
+
+const LinkParticle = ({ theme }: Props) => {
   const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      //await loadAll(engine);
-      //await loadFull(engine);
       await loadSlim(engine);
-      //await loadBasic(engine);
     })
       .then(() => {
-        console.log("xx");
         setInit(true);
       })
       .catch((e) => {
@@ -31,7 +28,10 @@ const App = () => {
     console.log(container);
   };
 
-  const options: ISourceOptions = useMemo(() => DARK_PARTICLE, []);
+  const options: ISourceOptions = useMemo(
+    () => (theme == "dark" ? DARK_PARTICLE : LIGHT_PARTICLE),
+    []
+  );
 
   if (init) {
     return (
@@ -46,4 +46,4 @@ const App = () => {
   return <></>;
 };
 
-export default App;
+export default LinkParticle;

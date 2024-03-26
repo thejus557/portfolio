@@ -1,12 +1,13 @@
 import { twMerge } from "tailwind-merge";
-import "./Card.scss";
+import "./GlossyCard.scss";
+
 interface Props {
   className: string;
   children: JSX.Element;
 }
 
-function Card({ className, children }: Props) {
+function GlossyCard({ className, children }: Props) {
   return <div className={twMerge("glass-card", className)}>{children}</div>;
 }
 
-export default Card;
+export default GlossyCard;
